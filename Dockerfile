@@ -1,11 +1,17 @@
-FROM node:12
+FROM node:latest
 
-COPY [".", "/usr/src/"]
+COPY ["package-lock.json", "package.json", "/usr/src/"]
 
 WORKDIR /usr/src
 
-RUN npm install
+RUN npm install -g npm && npm install -s 
+
+RUN apt-get update && apt-get install -y vim
+
+COPY [".", "/usr/src/"]
 
 EXPOSE 3000
 
-CMD ["node", "index.js"]
+CMD ["npx","nodemon", "index.js"]
+
+
